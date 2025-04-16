@@ -1,0 +1,244 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Roboto:wght@400;700&display=swap');
+
+:root {
+  --bg-color: #f0f0f0; /* White background */
+  --main-color: #00ffe5;
+  --accent-color: #ffffff; /* White accent */
+  --text-color: #333333;  /* Dark text color for better contrast */
+  --highlight-color: #ff0080;
+}
+
+* { /* html */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+/* Header */
+header {
+  background-color: var(--accent-color);
+  box-shadow: 0 0 10px var(--main-color);
+  position: fixed;
+  width: 100%;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  padding-bottom: 1rem; /* Added padding to provide some space below header */
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+}
+
+.logo {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.5rem;
+  color: var(--main-color);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+#cart-icon {
+  font-size: 2rem;
+  cursor: pointer;
+  color: var(--main-color);
+}
+
+/* Cart */
+.cart {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 350px;
+  height: 100vh;
+  background-color: #1e1e1e;
+  padding: 2rem;
+  transition: 0.4s ease;
+  box-shadow: -5px 0 15px rgba(0, 255, 229, 0.2);
+}
+
+.cart.active {
+  right: 0;
+}
+
+.cart-title {
+  text-align: center;
+  font-size: 1.5rem;
+  color: var(--main-color);
+  margin-bottom: 2rem;
+}
+
+.cart-box {
+  display: grid;
+  grid-template-columns: 80px auto 30px;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.cart-img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+.cart-product-title {
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 1rem;
+}
+
+.cart-price {
+  color: var(--highlight-color);
+  font-weight: 600;
+}
+
+.cart-quantity {
+  width: 50px;
+  padding: 4px;
+  background-color: #333;
+  border: 1px solid var(--main-color);
+  color: var(--main-color);
+  text-align: center;
+}
+
+.cart-remove {
+  color: var(--highlight-color);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.total {
+  border-top: 1px solid #333;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 1rem;
+  color: var(--main-color);
+}
+
+.btn-buy {
+  width: 100%;
+  padding: 10px;
+  background-color: var(--main-color);
+  border: none;
+  color: #000;
+  font-weight: 600;
+  margin-top: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-buy:hover {
+  background-color: var(--highlight-color);
+  color: #fff;
+}
+
+#close-cart {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 2rem;
+  color: var(--main-color);
+  cursor: pointer;
+}
+
+/* Section */
+.section-title {
+  font-size: 2rem;
+  text-align: center;
+  margin: 3rem 0 1rem;
+  font-family: 'Orbitron', sans-serif;
+  color: var(--main-color);
+  padding-top: 5rem; /* Added padding-top to add space under the header */
+}
+
+.shop-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 2rem;
+  padding: 0 2rem;
+  margin-top: 3rem; /* Space between the section title and product columns */
+}
+
+/* Product Boxes */
+.product-box {
+  background: #ffffff; /* Changed to white on product box */
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* shadow for depth */
+  transition: transform 0.3s, border-color 0.3s;
+  position: relative;
+}
+
+.product-box:hover {
+  transform: scale(1.05);
+  border-color: var(--main-color);
+}
+
+.product-img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  margin-bottom: 1rem;
+}
+
+.product-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-align: center;
+  color: var(--text-color);
+  margin-bottom: 0.5rem;
+}
+
+.price {
+  color: var(--highlight-color);
+  text-align: center;
+  font-weight: 600;
+  display: block;
+}
+
+.add-cart {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  font-size: 1.5rem;
+  background-color: var(--main-color);
+  color: #000;
+  padding: 3px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.add-cart:hover {
+  background-color: var(--highlight-color);
+  color: #fff;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  color: var(--text-color);
+  font-weight: 500;
+  transition: color 0.3s ease;
+  padding: 0.5rem;
+}
+
+.nav-links li a:hover {
+  color: var(--highlight-color);
+}
