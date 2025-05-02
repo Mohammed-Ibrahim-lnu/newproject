@@ -57,13 +57,13 @@
 
     <!-- SHOP -->
     <section class="shop-container">
-    <h2 class="section-title">GPUs</h2>
+    <h2 class="section-title">CPUs</h2>
     <!-- Shop content -->
     <div class="shop-content">
         <?php
 
-        // Query to fetch products_gpu
-        $sql = "SELECT * FROM products_gpu";
+        // Query to fetch products_cpu
+        $sql = "SELECT * FROM products_cpu";
         $result = $conn->query($sql);
 
         // Loop through and display the products

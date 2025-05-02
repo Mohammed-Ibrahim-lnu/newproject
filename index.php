@@ -26,7 +26,7 @@
             <ul class="nav-links">
                 <li><a href="/index.php" class="nav-link">HOME</a></li>
                 <li><a href="/gpu.php" class="nav-link">GPU</a></li>
-                <li><a href="#" class="nav-link">CPU</a></li>
+                <li><a href="/cpu.php" class="nav-link">CPU</a></li>
                 <li><a href="#" class="nav-link">RAM</a></li>
                 <li><a href="#" class="nav-link">CASE</a></li>
             </ul>
@@ -62,8 +62,8 @@
     <div class="shop-content">
         <?php
 
-        // Query to fetch products
-        $sql = "SELECT * FROM products";
+        // Query to fetch products_gpu
+        $sql = "SELECT * FROM products_gpu";
         $result = $conn->query($sql);
 
         // Loop through and display the products
