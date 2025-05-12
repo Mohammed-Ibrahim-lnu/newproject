@@ -1,7 +1,8 @@
 stages:
   - sync
 
-sync_to_github:
+# Sync GitLab repo to GitHub
+sync-to-github:
   stage: sync
   image: alpine:latest
   before_script:
@@ -9,8 +10,14 @@ sync_to_github:
   script:
     - git config --global user.email "mi222tn@student.lnu.se"
     - git config --global user.name "Mohammed Ibrahim"
-    - git remote remove github || true
+    - echo "Fetching existing remotes:"
+    - git remote -v
+    - git remote | grep github && git remote remove github || echo "No existing 'github' remote found."
     - git remote add github https://mi222tn:$GITHUB_TOKEN@github.com/mi222tn/newproject.git
+    - echo "Final remotes after adding github:"
+    - git remote -v
+    - echo "Pushing current HEAD to GitHub 'main' branch..."
     - git push github HEAD:main
-  only:
-    - main
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+
