@@ -13,7 +13,7 @@ sync-to-github:
     - echo "Fetching existing remotes:"
     - git remote -v
     - git remote | grep github && git remote remove github || echo "No existing 'github' remote found."
-    - git remote add github https://mi222tn:$GITHUB_TOKEN@github.com/mi222tn/newproject.git
+    - git remote add github https://Mohammed-Ibrahim-lnu:$GITHUB_TOKEN@github.com/Mohammed-Ibrahim-lnu/newproject.git
     - echo "Final remotes after adding github:"
     - git remote -v
     - echo "Pushing current HEAD to GitHub 'main' branch..."
