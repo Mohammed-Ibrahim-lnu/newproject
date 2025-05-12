@@ -10,6 +10,8 @@ sync_to_github:
     - git config --global user.email "mi222tn@student.lnu.se"
     - git config --global user.name "Mohammed Ibrahim"
     - git remote add github https://mi222tn:$GITHUB_TOKEN@github.com/mi222tn/newproject.git
+    - git fetch origin main
+    - git checkout -b main
     - git push github main
   only:
     - main
