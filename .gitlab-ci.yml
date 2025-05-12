@@ -1,0 +1,15 @@
+stages:
+  - sync
+
+sync_to_github:
+  stage: sync
+  image: alpine:latest
+  before_script:
+    - apk add --no-cache git
+  script:
+    - git config --global user.email "mi222tn@student.lnu.se"
+    - git config --global user.name "Mohammed Ibrahim"
+    - git remote add github https://mi222tn:$GITHUB_TOKEN@github.com/mi222tn/newproject.git
+    - git push github main
+  only:
+    - main
