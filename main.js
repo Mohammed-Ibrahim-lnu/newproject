@@ -55,7 +55,7 @@ function updateCartUI(cart, total) {
         div.innerHTML = `
             <div class='cart-product-title'>${item.name}</div>
             <div class='cart-quantity'>
-                <input type='number' min='1' class='qty-input' data-id='${id}' value='${item.quantity}' readonly>
+            <input type='text' inputmode='numeric' class='qty-input' data-id='${id}' value='${item.quantity}' readonly>
                 <div class='qty-buttons'>
                     <button class='qty-plus' data-id='${id}'>+</button>
                     <button class='qty-minus' data-id='${id}'>-</button>

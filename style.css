@@ -298,16 +298,3 @@ header {
 }
 
 
-/* Remove number input arrows (label for product amount display) in Chrome, Safari, Edge, Opera */
-.qty-input::-webkit-inner-spin-button,
-.qty-input::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-/* Remove number input arrows (label for product amount display) in Firefox */
-.qty-input[type=number] {
-    -moz-appearance: textfield;
-    appearance: none;
-}
-
