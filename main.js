@@ -55,14 +55,14 @@ function updateCartUI(cart, total) {
         div.innerHTML = `
             <div class='cart-product-title'>${item.name}</div>
             <div class='cart-quantity'>
-                <input type='number' min='1' class='qty-input' data-id='${id}' value='${item.quantity}'>
+                <input type='number' min='1' class='qty-input' data-id='${id}' value='${item.quantity}' readonly>
                 <div class='qty-buttons'>
                     <button class='qty-plus' data-id='${id}'>+</button>
                     <button class='qty-minus' data-id='${id}'>-</button>
                 </div>
             </div>
             <div class='cart-price'>$${parseFloat(item.price).toFixed(2)}</div>
-            <button class='cart-remove' data-id='${id}'>Remove</button>
+            <i class='bx bxs-trash-alt cart-remove' data-id='${id}'></i>
         `;
         cartContent.appendChild(div);
     }
@@ -71,6 +71,7 @@ function updateCartUI(cart, total) {
 
     attachCartEventListeners(cart);
 }
+
 
 function attachCartEventListeners(cart) {
     document.querySelectorAll('.qty-plus').forEach(btn => {
