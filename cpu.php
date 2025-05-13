@@ -36,8 +36,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['buy_now'])) {
 <head>
     <meta charset="UTF-8">
     <title>Frugal Company - Shopping</title>
-    <link rel="stylesheet" href="style.css">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="style.css?v=1.1">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css?v=1.1' rel='stylesheet'>
 </head>
 <body>
 <?php
@@ -102,6 +102,6 @@ $conn->close();
     </div>
 </section>
 
-<script src="main.js"></script>
+<script src="main.js?v=1.1"></script>
 </body>
 </html>
