@@ -17,12 +17,30 @@ function setupCartUI() {
         });
     }
 
+    // Detect current category based on URL
+    const path = window.location.pathname;
+    let category = 'gpu'; // default
+
+    if (path.includes('cpu')) category = 'cpu';
+    else if (path.includes('ram')) category = 'ram';
+    else if (path.includes('case')) category = 'case';
+
+
     document.querySelectorAll('.add-cart').forEach(button => {
         button.addEventListener('click', () => {
-            const { id, name, price } = button.dataset;
-            sendCartAction('add', id, name, price);
+            const id = button.dataset.id;
+            sendCartAction('add', id, '', '', '', category);
+
+            // Open the cart if not already open
+            const cart = document.querySelector('.cart');
+            if (cart && !cart.classList.contains('active')) {
+                cart.classList.add('active');
+            }
         });
     });
+
+
+
 
     // Event delegation for quantity, remove, and input actions
     if (cartContent) {
@@ -39,10 +57,9 @@ function setupCartUI() {
             if (btn.classList.contains('qty-minus')) {
                 const input = btn.closest('.cart-quantity').querySelector('.qty-input');
                 let newQuantity = parseInt(input.value) - 1;
-                if (newQuantity >= 1) {
-                    sendCartAction('update', id, '', '', newQuantity);
-                }
+                sendCartAction('update', id, '', '', newQuantity);
             }
+
 
             if (btn.classList.contains('cart-remove')) {
                 sendCartAction('remove', id);
@@ -74,11 +91,12 @@ function setupCartUI() {
         .catch(err => console.error('Error loading cart:', err));
 }
 
-function sendCartAction(action, productId, productName = '', productPrice = '', quantity = '') {
+function sendCartAction(action, productId, productName = '', productPrice = '', quantity = '', category = '') {
     let body = `action=${action}&product_id=${productId}`;
     if (action === 'add') {
-        body += `&product_name=${encodeURIComponent(productName)}&product_price=${productPrice}`;
+        body += `&category=${category}`;
     }
+
     if (action === 'update') {
         body += `&quantity=${quantity}`;
     }
