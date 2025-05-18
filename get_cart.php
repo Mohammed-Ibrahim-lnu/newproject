@@ -1,5 +1,10 @@
 <?php
 session_start();
+require 'cart_logic.php';
+
+$response = handleCartAction($_POST, $_SESSION);
+echo json_encode($response);
+
 $total = 0;
 
 if (!isset($_SESSION['cart'])) {
