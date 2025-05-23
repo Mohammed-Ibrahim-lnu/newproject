@@ -35,7 +35,8 @@ phpunit:
     - php composer.phar install
     - echo "Waiting for MySQL to be ready..."
     - until mysql -hmysql -uroot -pmysql -e "SELECT 1"; do sleep 1; done
-        - mysql -hmysql -uroot -pmysql -e "CREATE DATABASE IF NOT EXISTS frugal_company;"
+    - echo "MySQL is ready. Creating database..."
+    - mysql -hmysql -uroot -pmysql -e "CREATE DATABASE IF NOT EXISTS frugal_company;"
     - mysql -hmysql -uroot -pmysql frugal_company < frugal_company.sql
 
   script:
