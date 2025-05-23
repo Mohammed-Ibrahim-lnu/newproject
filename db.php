@@ -1,10 +1,10 @@
 <?php
 
-$servername = getenv('DB_HOST') ?: 'localhost';
+$servername = getenv('DB_HOST') ?: '127.0.0.1';
 $username   = getenv('DB_USER') ?: 'root';
 $password   = getenv('DB_PASS') ?: 'mysql';
 $dbname     = getenv('DB_NAME') ?: 'frugal_company';
-$port       = getenv('DB_PORT') ?: 3306;
+$port       = getenv('DB_PORT') ?: 3307;
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname, $port);

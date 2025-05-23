@@ -13,17 +13,33 @@ eslint:
   only:
     - main
 
-# Run PHP unit tests
 phpunit:
   stage: test
   image: php:8.2
+  services:
+    - name: mysql:8.0
+      alias: mysql
+
+  variables:
+    DB_HOST: mysql
+    DB_PORT: 3306
+    DB_USER: root
+    DB_PASS: mysql
+    DB_NAME: frugal_company
+    MYSQL_ROOT_PASSWORD: mysql
+
   before_script:
-    - apt-get update && apt-get install -y unzip git curl
+    - apt-get update && apt-get install -y unzip git curl default-mysql-client
     - docker-php-ext-install mysqli
     - curl -sS https://getcomposer.org/installer | php
     - php composer.phar install
+    - echo "Waiting for MySQL to be ready..."
+    - until mysql -hmysql -uroot -pmysql -e "SELECT 1"; do sleep 1; done
+    - mysql -hmysql -uroot -pmysql frugal_company < frugal_company.sql
+
   script:
     - php vendor/bin/phpunit
+
   only:
     - main
 
