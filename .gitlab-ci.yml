@@ -1,5 +1,40 @@
 stages:
+  - lint
+  - test
   - sync
+
+# Lint JavaScript using ESLint
+eslint:
+  stage: lint
+  image: node:18
+  script:
+    - npm ci || npm install
+    - npx eslint . --ext .js
+  only:
+    - main
+
+# Run PHP unit tests
+phpunit:
+  stage: test
+  image: php:8.2
+  before_script:
+    - apt-get update && apt-get install -y unzip git curl
+    - curl -sS https://getcomposer.org/installer | php
+    - php composer.phar install
+  script:
+    - php vendor/bin/phpunit
+  only:
+    - main
+
+# Run Jest JavaScript tests
+jest:
+  stage: test
+  image: node:18
+  script:
+    - npm ci || npm install
+    - npm test
+  only:
+    - main
 
 # Sync GitLab repo to GitHub
 sync-to-github:
