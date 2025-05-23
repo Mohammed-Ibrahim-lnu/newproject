@@ -3,7 +3,6 @@ function setupCartUI() {
     const cart = document.querySelector('.cart');
     const closeCart = document.querySelector('#close-cart');
     const cartContent = document.querySelector('.cart-content');
-    const totalPrice = document.querySelector('.total-price');
 
     if (cartIcon && cart) {
         cartIcon.addEventListener('click', () => {
@@ -17,21 +16,16 @@ function setupCartUI() {
         });
     }
 
-    // Detect current category based on URL
     const path = window.location.pathname;
-    let category = 'gpu'; // default
-
+    let category = 'gpu';
     if (path.includes('cpu')) category = 'cpu';
     else if (path.includes('ram')) category = 'ram';
     else if (path.includes('case')) category = 'case';
-
 
     document.querySelectorAll('.add-cart').forEach(button => {
         button.addEventListener('click', () => {
             const id = button.dataset.id;
             sendCartAction('add', id, '', '', '', category);
-
-            // Open the cart if not already open
             const cart = document.querySelector('.cart');
             if (cart && !cart.classList.contains('active')) {
                 cart.classList.add('active');
@@ -39,10 +33,6 @@ function setupCartUI() {
         });
     });
 
-
-
-
-    // Event delegation for quantity, remove, and input actions
     if (cartContent) {
         cartContent.addEventListener('click', event => {
             const btn = event.target;
@@ -56,10 +46,9 @@ function setupCartUI() {
 
             if (btn.classList.contains('qty-minus')) {
                 const input = btn.closest('.cart-quantity').querySelector('.qty-input');
-                let newQuantity = parseInt(input.value) - 1;
+                const newQuantity = parseInt(input.value) - 1;
                 sendCartAction('update', id, '', '', newQuantity);
             }
-
 
             if (btn.classList.contains('cart-remove')) {
                 sendCartAction('remove', id);
@@ -80,7 +69,6 @@ function setupCartUI() {
         });
     }
 
-    // Load initial cart
     fetch('get_cart.php')
         .then(res => res.json())
         .then(data => {
@@ -91,12 +79,11 @@ function setupCartUI() {
         .catch(err => console.error('Error loading cart:', err));
 }
 
-function sendCartAction(action, productId, productName = '', productPrice = '', quantity = '', category = '') {
+function sendCartAction(action, productId, quantity = '', category = '') {
     let body = `action=${action}&product_id=${productId}`;
     if (action === 'add') {
         body += `&category=${category}`;
     }
-
     if (action === 'update') {
         body += `&quantity=${quantity}`;
     }
@@ -123,7 +110,7 @@ function updateCartUI(cart, total) {
 
     cartContent.innerHTML = '';
 
-    for (let id in cart) {
+    for (const id in cart) {
         const item = cart[id];
         const div = document.createElement('div');
         div.className = 'cart-box';
@@ -145,9 +132,12 @@ function updateCartUI(cart, total) {
     totalPrice.textContent = `$${total.toFixed(2)}`;
 }
 
-// Export for testing
-if (typeof module !== 'undefined') {
+// Export for testing in Node.js, Jest)
+if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
     module.exports = { setupCartUI, sendCartAction, updateCartUI };
-} else {
+}
+
+if (typeof window !== 'undefined') {
     window.addEventListener('DOMContentLoaded', setupCartUI);
 }
+

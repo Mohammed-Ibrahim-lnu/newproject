@@ -1,0 +1,14 @@
+## Ignores all 3rd party files to filter out the error message.
+
+# Ignore dependencies
+node_modules/
+vendor/
+
+# Ignore built/test output
+coverage/
+dist/
+
+# Ignore specific files (optional)
+*.min.js
+
+

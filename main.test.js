@@ -2,17 +2,14 @@
  * @jest-environment jsdom
  */
 
-//Frontend tests on main.js
-
 const fs = require("fs");
 const path = require("path");
 const { setupCartUI } = require("./main.js");
 
 beforeEach(() => {
-  // Mock fetch before DOM setup
   global.fetch = jest.fn(() =>
     Promise.resolve({
-      json: () => Promise.resolve({ success: true, cart: {}, total: 0 }),
+      json: () => Promise.resolve({ success: true, cart: {}, total: 0 })
     })
   );
 
