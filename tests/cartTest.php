@@ -11,10 +11,10 @@ class CartTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->session = ['cart' => []];
+        $this->session = ['cart' => []]; // Empty array for clean start every test
     }
 
-    private function getProductFromDb($productId, $category)
+    private function getProductFromDb($productId, $category) // Fetches the tables ex. products_gpu with prod title and price.
     {
         require __DIR__ . '/../db.php';
         $table = $category === 'cpu' ? 'products_cpu' : 'products_gpu';
@@ -27,7 +27,7 @@ class CartTest extends TestCase
         return $product;
     }
 
-    public function testAddProductFromDatabase()
+    public function testAddProductFromDatabase() // Simulates a user add-to-cart function of a product by id and category.
     {
         $productId = 1;
         $category = 'gpu';
@@ -51,7 +51,7 @@ class CartTest extends TestCase
         $this->assertEquals(1, $item['quantity']);
     }
 
-    public function testUpdateQuantity()
+    public function testUpdateQuantity() // Sets a product in the cart, checks quantity function.
     {
         $productId = 1;
         $category = 'gpu';
@@ -77,7 +77,7 @@ class CartTest extends TestCase
         $this->assertEquals($price * 3, $response['total']);
     }
 
-    public function testRemoveProduct()
+    public function testRemoveProduct() // Adds a fake product to the cart, then sends a remove action.
     {
         $this->session['cart'][1] = [
             'name' => 'RTX 6700 XT',
