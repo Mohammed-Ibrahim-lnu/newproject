@@ -15,9 +15,11 @@
 
 ## USAGE
 
-RUN PHP SERVER EXTENSION:
+RUN PHP SERVER EXTENSION: 
 
 ![image](./READMEimg/SERVE.png)
+
+Notes: This server runs through localhost and AMPPS needs be open to successfully run the DB. Since the code runs DB through Render & deployed DB from API Clever or through Localhost by the extension.
 
 
 ## DEPLOYMENT
