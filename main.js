@@ -38,17 +38,18 @@ function setupCartUI() {
             const btn = event.target;
             const id = btn.dataset.id;
 
-            if (btn.classList.contains('qty-plus')) {
-                const input = btn.closest('.cart-quantity').querySelector('.qty-input');
-                const newQuantity = parseInt(input.value) + 1;
-                sendCartAction('update', id, '', '', newQuantity);
-            }
+if (btn.classList.contains('qty-plus')) {
+    const input = btn.closest('.cart-quantity').querySelector('.qty-input');
+    const newQuantity = parseInt(input.value) + 1;
+    sendCartAction('update', id, newQuantity);
+}
 
-            if (btn.classList.contains('qty-minus')) {
-                const input = btn.closest('.cart-quantity').querySelector('.qty-input');
-                const newQuantity = parseInt(input.value) - 1;
-                sendCartAction('update', id, '', '', newQuantity);
-            }
+if (btn.classList.contains('qty-minus')) {
+    const input = btn.closest('.cart-quantity').querySelector('.qty-input');
+    const newQuantity = parseInt(input.value) - 1;
+    sendCartAction('update', id, newQuantity);
+}
+
 
             if (btn.classList.contains('cart-remove')) {
                 sendCartAction('remove', id);
