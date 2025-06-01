@@ -83,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['buy_now'])) {
         </div>
     </section>
 
-    <script src="main.js?v=1.1"></script>
+    <script src="main.js?v=1.2"></script>
 </body>
 
 </html>

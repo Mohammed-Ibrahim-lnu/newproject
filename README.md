@@ -1,10 +1,45 @@
-# Ditt projekt
+# My project - Frugal Company website
 
-Detta är ditt projekts GitLab-projekt och här hittar du bland annat Wikin i vilken du ska dokumentera ditt projekt. Du hittar länk till din Wiki i menyn till vänster.
+## INSTALLATION
 
-Detta GitLab-projekt kan du använda för att spara ner saker som hör till din applikation som helhet men du bör skapa egna projekt för respektive del i ditt projekt. Kanske ett projekt för en webbklient och ett för ett API. Ska du ta fram flera _"microservices"_? Då kanske ett GitLab-projekt per service är att föredra. Har du bara en kodbas så kan du naturligtvis använda detta GitLab-projekt, men observera att du inte är "maintainer" på detta projekt varför du inte kan skapa egna pipelines.
+- VSCODE
+- EXTENSIONS (PHP Intelephense)
+- GIT
+- DOCKER
+- ESLINT
+- PHP SERVER
+- SQL Server (myssql)
+- SQL Database Projects
+- AMPPS (Apache, MySQL, PHP skip the S)
 
-Det är på detta GitLab-projekt du kommer att göra din _"merge request"_.
+## USAGE
 
-👉 __Ersätt gärna denna sida med eget innehåll.__
-# frugal
+RUN PHP SERVER EXTENSION:
+
+![image](./READMEimg/SERVE.png)
+
+
+## DEPLOYMENT
+
+- [Database](./frugal_company.sql)
+
+- [Simulate DB server through docker before deployment](https://www.docker.com/products/docker-desktop/)
+
+- [Deploy SQL DB](api.clever-cloud.com)
+
+- [Render](https://newproject-qyzl.onrender.com/index.php)
+
+- Add SQL Deployment's env keys into Render env variables.
+
+- Add [dockerfile](./dockerfile), [render.yaml](./render.yaml) & [.gitlab-ci.yml](/.gitlab-ci.yml)
+
+## TESTING
+
+- [Jest test for JS tests](./main.test.js) - npm test - [package.json](./package.json), [package-lock.json](./package-lock.json)
+- [PHPunit for PHP tests](./tests/cartTest.php) - TEST- [composer.json](./composer.json), [composer.lock](./composer.lock)
+
+- Install node_modules.
+
+## LICENSE
+
+[MIT](../newproject//LICENSE)
