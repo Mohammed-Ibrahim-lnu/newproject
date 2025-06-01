@@ -4,13 +4,14 @@
 
 - VSCODE
 - EXTENSIONS (PHP Intelephense)
+- SQL Server (myssql)
+- SQL Database Projects
 - GIT
 - DOCKER
 - ESLINT
 - PHP SERVER
-- SQL Server (myssql)
-- SQL Database Projects
 - AMPPS (Apache, MySQL, PHP skip the S)
+- Install node_modules.
 
 ## USAGE
 
@@ -35,10 +36,11 @@ RUN PHP SERVER EXTENSION:
 
 ## TESTING
 
-- [Jest test for JS tests](./main.test.js) - npm test - [package.json](./package.json), [package-lock.json](./package-lock.json)
-- [PHPunit for PHP tests](./tests/cartTest.php) - TEST- [composer.json](./composer.json), [composer.lock](./composer.lock)
+- [Jest test for JS tests](./main.test.js) - Commands in terminal: npm test - [package.json](./package.json), [package-lock.json](./package-lock.json)
 
-- Install node_modules.
+- ESLINT RUN - Commands in terminal: npx eslint . --ext .js
+
+- [PHPunit for PHP tests](./tests/cartTest.php) - Commands in terminal: php vendor/bin/phpunit / php vendor/bin/phpunit --testdox - [composer.json](./composer.json), [composer.lock](./composer.lock)
 
 ## LICENSE
 
