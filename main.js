@@ -16,18 +16,14 @@ function setupCartUI() {
         });
     }
 
-    const path = window.location.pathname;
-    let category = 'gpu';
-    if (path.includes('cpu')) category = 'cpu';
-    else if (path.includes('ram')) category = 'ram';
-    else if (path.includes('case')) category = 'case';
-
     document.querySelectorAll('.add-cart').forEach(button => {
         button.addEventListener('click', () => {
             const id = button.dataset.id;
-            sendCartAction('add', id, '', '', '', category);
-            const cart = document.querySelector('.cart');
-            if (cart && !cart.classList.contains('active')) {
+            const category = button.dataset.category;
+            const cartKey = `${category}_${id}`;
+            sendCartAction('add', cartKey, '', category);
+
+            if (!cart.classList.contains('active')) {
                 cart.classList.add('active');
             }
         });
@@ -37,22 +33,23 @@ function setupCartUI() {
         cartContent.addEventListener('click', event => {
             const btn = event.target;
             const id = btn.dataset.id;
+            const category = btn.dataset.category;
+            const cartKey = `${category}_${id}`;
 
-if (btn.classList.contains('qty-plus')) {
-    const input = btn.closest('.cart-quantity').querySelector('.qty-input');
-    const newQuantity = parseInt(input.value) + 1;
-    sendCartAction('update', id, newQuantity);
-}
+            if (btn.classList.contains('qty-plus')) {
+                const input = btn.closest('.cart-quantity').querySelector('.qty-input');
+                const newQuantity = parseInt(input.value) + 1;
+                sendCartAction('update', cartKey, newQuantity, category);
+            }
 
-if (btn.classList.contains('qty-minus')) {
-    const input = btn.closest('.cart-quantity').querySelector('.qty-input');
-    const newQuantity = parseInt(input.value) - 1;
-    sendCartAction('update', id, newQuantity);
-}
-
+            if (btn.classList.contains('qty-minus')) {
+                const input = btn.closest('.cart-quantity').querySelector('.qty-input');
+                const newQuantity = parseInt(input.value) - 1;
+                sendCartAction('update', cartKey, newQuantity, category);
+            }
 
             if (btn.classList.contains('cart-remove')) {
-                sendCartAction('remove', id);
+                sendCartAction('remove', cartKey, '', category);
             }
         });
 
@@ -60,12 +57,14 @@ if (btn.classList.contains('qty-minus')) {
             const input = event.target;
             if (input.classList.contains('qty-input')) {
                 const id = input.dataset.id;
+                const category = input.dataset.category;
+                const cartKey = `${category}_${id}`;
                 let newQuantity = parseInt(input.value);
                 if (isNaN(newQuantity) || newQuantity < 1) {
                     newQuantity = 1;
                     input.value = 1;
                 }
-                sendCartAction('update', id, '', '', newQuantity);
+                sendCartAction('update', cartKey, newQuantity, category);
             }
         });
     }
@@ -80,8 +79,8 @@ if (btn.classList.contains('qty-minus')) {
         .catch(err => console.error('Error loading cart:', err));
 }
 
-function sendCartAction(action, productId, quantity = '', category = '') {
-    let body = `action=${action}&product_id=${productId}`;
+function sendCartAction(action, productKey, quantity = '', category = '') {
+    let body = `action=${action}&product_id=${productKey}`;
     if (action === 'add') {
         body += `&category=${category}`;
     }
@@ -111,21 +110,22 @@ function updateCartUI(cart, total) {
 
     cartContent.innerHTML = '';
 
-    for (const id in cart) {
-        const item = cart[id];
+    for (const key in cart) {
+        const item = cart[key];
         const div = document.createElement('div');
         div.className = 'cart-box';
         div.innerHTML = `
             <div class='cart-product-title'>${item.name}</div>
             <div class='cart-quantity'>
-                <input type='text' inputmode='numeric' class='qty-input' data-id='${id}' value='${item.quantity}' readonly>
+                <input type='text' inputmode='numeric' class='qty-input' 
+                    data-id='${item.id}' data-category='${item.category}' value='${item.quantity}' readonly>
                 <div class='qty-buttons'>
-                    <button class='qty-plus' data-id='${id}'>+</button>
-                    <button class='qty-minus' data-id='${id}'>-</button>
+                    <button class='qty-plus' data-id='${item.id}' data-category='${item.category}'>+</button>
+                    <button class='qty-minus' data-id='${item.id}' data-category='${item.category}'>-</button>
                 </div>
             </div>
             <div class='cart-price'>$${parseFloat(item.price).toFixed(2)}</div>
-            <i class='bx bxs-trash-alt cart-remove' data-id='${id}'></i>
+            <i class='bx bxs-trash-alt cart-remove' data-id='${item.id}' data-category='${item.category}'></i>
         `;
         cartContent.appendChild(div);
     }
@@ -133,7 +133,7 @@ function updateCartUI(cart, total) {
     totalPrice.textContent = `$${total.toFixed(2)}`;
 }
 
-// Export for testing in Node.js, Jest)
+// Export for testing in Node.js, Jest
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
     module.exports = { setupCartUI, sendCartAction, updateCartUI };
 }
@@ -141,4 +141,3 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
 if (typeof window !== 'undefined') {
     window.addEventListener('DOMContentLoaded', setupCartUI);
 }
-

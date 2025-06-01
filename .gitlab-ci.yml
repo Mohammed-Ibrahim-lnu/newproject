@@ -41,6 +41,7 @@ phpunit:
 
   script:
     - php vendor/bin/phpunit
+    - php vendor/bin/phpunit --testdox
 
   only:
     - main

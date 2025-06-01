@@ -11,10 +11,10 @@ class CartTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->session = ['cart' => []]; // Empty array for clean start every test
+        $this->session = ['cart' => []];
     }
 
-    private function getProductFromDb($productId, $category) // Fetches the tables ex. products_gpu with prod title and price.
+    private function getProductFromDb($productId, $category)
     {
         require __DIR__ . '/../db.php';
         $table = $category === 'cpu' ? 'products_cpu' : 'products_gpu';
@@ -27,23 +27,23 @@ class CartTest extends TestCase
         return $product;
     }
 
-    public function testAddProductFromDatabase() // Simulates a user add-to-cart function of a product by id and category.
+    public function testAddProductFromDatabase()
     {
         $productId = 1;
         $category = 'gpu';
+        $compositeKey = "{$category}_{$productId}";
 
         $post = [
             'action' => 'add',
-            'product_id' => $productId,
-            'category' => $category
+            'product_id' => $compositeKey
         ];
 
         $response = handleCartAction($post, $this->session);
 
         $this->assertTrue($response['success']);
-        $this->assertArrayHasKey($productId, $this->session['cart']);
+        $this->assertArrayHasKey($compositeKey, $this->session['cart']);
 
-        $item = $this->session['cart'][$productId];
+        $item = $this->session['cart'][$compositeKey];
         $product = $this->getProductFromDb($productId, $category);
 
         $this->assertEquals($product['title'], $item['name']);
@@ -51,14 +51,18 @@ class CartTest extends TestCase
         $this->assertEquals(1, $item['quantity']);
     }
 
-    public function testUpdateQuantity() // Sets a product in the cart, checks quantity function.
+    public function testUpdateQuantity()
     {
         $productId = 1;
         $category = 'gpu';
+        $compositeKey = "{$category}_{$productId}";
+
         $product = $this->getProductFromDb($productId, $category);
         $price = floatval($product['price']);
 
-        $this->session['cart'][$productId] = [
+        $this->session['cart'][$compositeKey] = [
+            'id' => $productId,
+            'category' => $category,
             'name' => $product['title'],
             'price' => $price,
             'quantity' => 1
@@ -66,20 +70,26 @@ class CartTest extends TestCase
 
         $post = [
             'action' => 'update',
-            'product_id' => $productId,
+            'product_id' => $compositeKey,
             'quantity' => 3
         ];
 
         $response = handleCartAction($post, $this->session);
 
         $this->assertTrue($response['success']);
-        $this->assertEquals(3, $this->session['cart'][$productId]['quantity']);
+        $this->assertEquals(3, $this->session['cart'][$compositeKey]['quantity']);
         $this->assertEquals($price * 3, $response['total']);
     }
 
-    public function testRemoveProduct() // Adds a fake product to the cart, then sends a remove action.
+    public function testRemoveProduct()
     {
-        $this->session['cart'][1] = [
+        $productId = 1;
+        $category = 'gpu';
+        $compositeKey = "{$category}_{$productId}";
+
+        $this->session['cart'][$compositeKey] = [
+            'id' => $productId,
+            'category' => $category,
             'name' => 'RTX 6700 XT',
             'price' => 150.00,
             'quantity' => 1
@@ -87,13 +97,13 @@ class CartTest extends TestCase
 
         $post = [
             'action' => 'remove',
-            'product_id' => 1
+            'product_id' => $compositeKey
         ];
 
         $response = handleCartAction($post, $this->session);
 
         $this->assertTrue($response['success']);
-        $this->assertArrayNotHasKey(1, $this->session['cart']);
+        $this->assertArrayNotHasKey($compositeKey, $this->session['cart']);
         $this->assertEquals(0, $response['total']);
     }
 }

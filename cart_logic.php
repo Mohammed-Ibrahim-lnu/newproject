@@ -6,27 +6,28 @@ function handleCartAction($post, &$session)
     }
 
     $action = $post['action'] ?? null;
-    $productId = $post['product_id'] ?? '';
+    $productKey = $post['product_id'] ?? '';
     $response = ['success' => false];
+    [$category, $id] = explode('_', $productKey);
 
     switch ($action) {
         case 'add':
             require 'db.php';
-
-            $category = $post['category'] ?? 'gpu';
             $table = $category === 'cpu' ? 'products_cpu' : 'products_gpu';
 
             $stmt = $conn->prepare("SELECT title, price FROM `$table` WHERE id = ?");
-            $stmt->bind_param("i", $productId);
+            $stmt->bind_param("i", $id);
             $stmt->execute();
             $result = $stmt->get_result();
             $product = $result->fetch_assoc();
 
             if ($product) {
-                if (isset($session['cart'][$productId])) {
-                    $session['cart'][$productId]['quantity'] += 1;
+                if (isset($session['cart'][$productKey])) {
+                    $session['cart'][$productKey]['quantity'] += 1;
                 } else {
-                    $session['cart'][$productId] = [
+                    $session['cart'][$productKey] = [
+                        'id' => $id,
+                        'category' => $category,
                         'name' => $product['title'],
                         'price' => floatval($product['price']),
                         'quantity' => 1
@@ -38,20 +39,19 @@ function handleCartAction($post, &$session)
             $conn->close();
             break;
 
-
         case 'update':
             $quantity = intval($post['quantity'] ?? 1);
             if ($quantity <= 0) {
-                unset($session['cart'][$productId]);
+                unset($session['cart'][$productKey]);
             } else {
-                if (isset($session['cart'][$productId])) {
-                    $session['cart'][$productId]['quantity'] = $quantity;
+                if (isset($session['cart'][$productKey])) {
+                    $session['cart'][$productKey]['quantity'] = $quantity;
                 }
             }
             break;
 
         case 'remove':
-            unset($session['cart'][$productId]);
+            unset($session['cart'][$productKey]);
             break;
     }
 
